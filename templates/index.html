@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="{{ url_for('static', filename='jQuery/jquery-1.6.4.js') }}"></script>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/css_1.css') }}" />
+<script>
+	// 在网页点击按钮启动步进动机
+    $(document).ready(function() {
+        $("#motor_start").click(function () {
+            $.ajax({
+                url: "/motor", data: {"motor_order": "start"}, success: function (data) {
+                    alert("motor state" + ": " + data);
+                }
+            });
+        });
+    });
+
+
+	// 在网页上点击按钮停止步进动机 
+    $(document).ready(function() {
+        $("#motor_stop").click(function () {
+            $.ajax({
+                url: "/motor", data: {"motor_order": "stop"}, success: function (data) {
+                    alert("motor state" + ": " + data);
+                }
+            });
+        });
+    });
+	
+	// 每秒获取超声测的距离数值
+	function refreshContainer(number) {
+           document.getElementById("get_number_every_sec").innerHTML = number;
+    }
+	var get_number_every_sc = function(){
+           $.get("/ultrasound",function(data){
+               refreshContainer(data);
+           });
+    };
+    window.onload = function () {
+        t = window.setInterval(get_number_every_sc, 992);
+    };
+
+</script>
+</head>
+<body>
+<section>
+	<input type="button" id="motor_start" value="启动动机" />
+	<input type="button" id="motor_stop" value="停止动机" />
+</section>
+
+<section>
+	<h2>实时距离(厘米)</h2>
+	<span id="get_number_every_sec">00.00</span>
+</section>
+
+
+</body>
+</html>
