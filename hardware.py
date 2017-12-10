@@ -33,6 +33,8 @@ class motor:
         self.DIR_PWM = GPIO.PWM(self.DIR_IN, self.DIR_FRE)
 
     def motor_init(self):
+        # 阻止警告
+        GPIO.setwarnings(False)
         GPIO.setup(self.PUL_IN, GPIO.OUT)
         GPIO.setup(self.DIR_IN, GPIO.OUT)
         # print("电机接线引脚初始化完毕")
@@ -58,6 +60,8 @@ class ultrasound:
         self.ultrasound_init()
 
     def ultrasound_init(self):
+        # 阻止警告
+        GPIO.setwarnings(False)
         GPIO.setup(self.TRIG_IN, GPIO.OUT, initial=GPIO.LOW)
         GPIO.setup(self.ECHO_IN, GPIO.IN)
         # print("超声接线引脚初始化完毕")
